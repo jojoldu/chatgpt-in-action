@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Configuration, OpenAIApi } from 'openai';
 
 @Injectable()
-export class OpenApiService {
+export class OpenAiService {
   private readonly openai: OpenAIApi;
 
   constructor(apiKey = process.env.OPENAI_API_KEY) {
@@ -23,7 +23,11 @@ export class OpenApiService {
 
       return completion.data.choices[0].text;
     } catch (error) {
-      const message = `Error with OpenAI API request: ${error.message}, status=${error.response.status}, response=${error.response.data}`;
+      const message = `Error with OpenAI API request: ${
+        error.message
+      }, status=${error.response.status}, response=${JSON.stringify(
+        error.response.data,
+      )}`;
       console.error(message);
       return message;
     }
